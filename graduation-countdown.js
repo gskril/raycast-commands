@@ -15,7 +15,7 @@
 
 // countdown to june 9th, 2022 at 7pm EST
 const now = new Date();
-const graduation = new Date(2022, 5, 3, 19, 0, 0, 0);
+const graduation = new Date(2022, 5, 9, 19, 0, 0, 0);
 const diff = graduation - now;
 
 const days = Math.floor(diff / (1000 * 60 * 60 * 24));
