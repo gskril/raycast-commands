@@ -1,0 +1,9 @@
+{
+  "name": "raycast",
+  "version": "1.0.0",
+  "dependencies": {
+    "chrono-node": "^2.3.8",
+    "clipboardy": "^3.0.0"
+  },
+  "type": "module"
+}
