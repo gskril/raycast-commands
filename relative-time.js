@@ -2,23 +2,33 @@
 
 // Required parameters:
 // @raycast.schemaVersion 1
-// @raycast.title Unix to Date
+// @raycast.title Relative Time
 // @raycast.mode silent
 
 // Optional parameters:
 // @raycast.icon ⏰
-// @raycast.argument1 { "type": "text", "placeholder": "1652806800" }
+// @raycast.argument1 { "type": "text", "placeholder": "1652806800 or 6/18/22" }
 // @raycast.packageName Date Converter
 
 // Documentation:
 // @raycast.author Greg Skriloff
 // @raycast.authorURL https://gregskril.com
 
-const unix = parseInt(process.argv.slice(2)[0])
+import * as chrono from 'chrono-node'
+
+const input = process.argv.slice(2)[0]
+let date
+
+if (input.match(/^\d+$/)) {
+	// input is a unix timestamp
+	date = new Date(input * 1000)
+} else {
+	// input is a date string
+	date = chrono.parseDate(input)
+}
 
 // unix to date
 const now = new Date()
-const date = new Date(unix * 1000)
 const diff = date.getTime() - now.getTime()
 
 // diff to days hours, minutes
