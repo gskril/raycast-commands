@@ -27,6 +27,11 @@ if (input.match(/^\d+$/)) {
 	date = chrono.parseDate(input)
 }
 
+if (date === null) {
+	console.log('Invalid date')
+	process.exit(1)
+}
+
 // unix to date
 const now = new Date()
 const diff = date.getTime() - now.getTime()
