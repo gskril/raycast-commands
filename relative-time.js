@@ -20,16 +20,16 @@ const input = process.argv.slice(2)[0]
 let date
 
 if (input.match(/^\d+$/)) {
-	// input is a unix timestamp
-	date = new Date(input * 1000)
+  // input is a unix timestamp
+  date = new Date(input * 1000)
 } else {
-	// input is a date string
-	date = chrono.parseDate(input)
+  // input is a date string
+  date = chrono.parseDate(input)
 }
 
 if (date === null) {
-	console.log('Invalid date')
-	process.exit(1)
+  console.log('Invalid date')
+  process.exit(1)
 }
 
 // unix to date
@@ -42,17 +42,13 @@ const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
 const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
 
 if (days < 0 || hours < 0 || minutes < 0) {
-	// currently doesn't support dates in the past
-	console.log('The date is in the past')
+  // currently doesn't support dates in the past
+  console.log('The date is in the past')
 } else {
-	console.log(
-		`${days < 1 ? '' : `${days} ${days === 1 ? 'day, ' : 'days, '}`}` +
-			`${
-				hours < 1
-					? ''
-					: `${hours} ${hours === 1 ? 'hour, ' : 'hours, '}`
-			}` +
-			`${minutes < 1 ? '' : `${minutes} minutes`}` +
-			' from now'
-	)
+  console.log(
+    `${days < 1 ? '' : `${days} ${days === 1 ? 'day, ' : 'days, '}`}` +
+      `${hours < 1 ? '' : `${hours} ${hours === 1 ? 'hour, ' : 'hours, '}`}` +
+      `${minutes < 1 ? '' : `${minutes} minutes`}` +
+      ' from now'
+  )
 }

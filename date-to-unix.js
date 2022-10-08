@@ -21,18 +21,18 @@ let input = process.argv.slice(2)[0]
 
 // Add keywords to chrono parser
 if (input.includes('tm')) {
-	input = input.replace('tm', 'tomorrow')
+  input = input.replace('tm', 'tomorrow')
 }
 
 const date = chrono.parseDate(input)
 
 if (date) {
-	const unix = date.getTime() / 1000
-	const unixString = unix.toString().split('.')[0]
+  const unix = date.getTime() / 1000
+  const unixString = unix.toString().split('.')[0]
 
-	clipboard.writeSync(unixString)
+  clipboard.writeSync(unixString)
 
-	console.log('Copied to clipboard')
+  console.log('Copied to clipboard')
 } else {
-	console.log('Invalid date')
+  console.log('Invalid date')
 }
