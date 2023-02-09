@@ -2,9 +2,11 @@
   "name": "raycast",
   "version": "1.0.0",
   "dependencies": {
+    "@standard-crypto/farcaster-js": "^5.5.1",
     "axios": "^0.27.2",
     "chrono-node": "^2.3.8",
-    "clipboardy": "^3.0.0"
+    "clipboardy": "^3.0.0",
+    "dotenv": "^16.0.3"
   },
   "type": "module"
 }
