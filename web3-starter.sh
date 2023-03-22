@@ -20,8 +20,6 @@ cd /Users/Greg/Desktop/crypto/ || exit
 gh repo create "$1" --template gskril/web3-starter --private
 sleep 3
 echo "https://github.com/gskril/$1" | pbcopy
-mkdir /Users/Greg/Desktop/crypto/"$1"
-cd /Users/Greg/Desktop/crypto/"$1" || exit
 gh repo clone gskril/"$1"
 cd "$1" || exit
 echo "Launching VS Code..."
