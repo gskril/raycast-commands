@@ -10,21 +10,20 @@
 // @raycast.packageName Ethereum
 
 // Documentation:
-// @raycast.description Check the live Ethereum gas price from Etherscan
+// @raycast.description Check the live Ethereum gas price
 // @raycast.author Greg Skriloff
 // @raycast.authorURL https://twitter.com/gregskril
 
-import axios from 'axios'
+import { createPublicClient, http } from 'viem'
+import { mainnet } from 'viem/chains'
 
-axios
-  .get('https://gas.best/stats')
-  .then(async (res) => {
-    const data = await res.data
-    const live = data.pending.fee + ' gwei'
-    const est60 = data.forecast['1 hour'] + ' gwei'
+const publicClient = createPublicClient({
+  chain: mainnet,
+  transport: http(),
+})
 
-    console.log(`${live}   ⏰ ${est60} in the hour`)
-  })
-  .catch((err) => {
-    console.log(err)
-  })
+const gasPrice = await publicClient
+  .getGasPrice()
+  .then((res) => Number(res) / 1e9)
+
+console.log(`${gasPrice.toFixed(2)} gwei`)
