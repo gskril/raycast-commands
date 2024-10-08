@@ -19,7 +19,7 @@ import { mainnet } from 'viem/chains'
 
 const publicClient = createPublicClient({
   chain: mainnet,
-  transport: http(),
+  transport: http('https://eth.drpc.org'),
 })
 
 const gasPrice = await publicClient
