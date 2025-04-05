@@ -5,7 +5,7 @@
 // @raycast.title ENS Developer Tools
 // @raycast.mode fullOutput
 
-import { labelhash, namehash } from 'viem'
+import { isHex, labelhash, namehash } from 'viem'
 import packet from 'dns-packet'
 
 // Optional parameters:
@@ -23,13 +23,19 @@ const label = input.split('.')[0]
 const nameHash = namehash(input)
 const labelHash = labelhash(label)
 
-const data = {
-  label,
-  dnsEncoded: '0x' + packet.name.encode(input).toString('hex'),
-  nameHash,
-  nameHashUint: BigInt(nameHash).toString(),
-  labelHash: labelHash,
-  labelHashUint: BigInt(labelHash).toString(),
-}
+if (isHex(input)) {
+  console.log({
+    dnsDecoded: packet.name.decode(Buffer.from(input.slice(2), 'hex')),
+  })
+} else {
+  const data = {
+    label,
+    dnsEncoded: '0x' + packet.name.encode(input).toString('hex'),
+    nameHash,
+    nameHashUint: BigInt(nameHash).toString(),
+    labelHash: labelHash,
+    labelHashUint: BigInt(labelHash).toString(),
+  }
 
-console.log(data)
+  console.log(data)
+}
