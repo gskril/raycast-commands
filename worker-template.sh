@@ -18,4 +18,4 @@ cp -r /Users/Greg/Documents/worker-template /Users/Greg/Desktop
 mv /Users/Greg/Desktop/worker-template /Users/Greg/Desktop/"$1"
 cd /Users/Greg/Desktop/"$1" || exit
 echo "Launching VS Code..."
-code .
+cursor .

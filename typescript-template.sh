@@ -14,8 +14,8 @@
 # @raycast.author Greg Skriloff
 # @raycast.authorURL https://gregskril.com
 
-cp -r /Users/Greg/Documents/typescript-template /Users/Greg/Desktop
-mv /Users/Greg/Desktop/typescript-template /Users/Greg/Desktop/"$1"
+cp -r /Users/Greg/Documents/typescript-template /Users/Greg/Desktop/"$1"
+# mv /Users/Greg/Desktop/typescript-template /Users/Greg/Desktop/"$1"
 cd /Users/Greg/Desktop/"$1" || exit
-echo "Launching VS Code..."
-code .
+echo "Launching Cursor..."
+cursor .

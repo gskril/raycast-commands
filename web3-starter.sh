@@ -23,4 +23,4 @@ echo "https://github.com/gskril/$1" | pbcopy
 gh repo clone gskril/"$1"
 cd "$1" || exit
 echo "Launching VS Code..."
-code .
+cursor .
