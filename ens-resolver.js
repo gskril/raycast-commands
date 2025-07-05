@@ -14,35 +14,33 @@
 // @raycast.author Greg Skriloff
 // @raycast.authorURL https://gregskril.com
 
-import axios from 'axios'
-import clipboard from 'clipboardy'
+import { createPublicClient, http, isAddress } from 'viem'
+import { mainnet } from 'viem/chains'
+import clipboardy from 'clipboardy'
 
-const arg = process.argv.slice(2)[0]
+const input = process.argv.slice(2)[0]
 
-axios
-  .get(`https://api.ensideas.com/ens/resolve/${arg}`)
-  .then(async (res) => {
-    const data = await res.data
-    const ethAddressRegex = new RegExp(/^0x[a-fA-F0-9]{40}$/)
+const client = createPublicClient({
+  chain: mainnet,
+  transport: http(),
+})
 
-    const address = data.address
-    const name = data.name
-    const displayName = data.displayName
+if (isAddress(input)) {
+  const name = await client.getEnsName({ address: input })
 
-    if (ethAddressRegex.test(arg)) {
-      clipboard.writeSync(displayName)
-      console.log(
-        name
-          ? 'Copied name to clipboard'
-          : 'Copied abbreviated address to clipboard'
-      )
-    } else if (address) {
-      clipboard.writeSync(data.address)
-      console.log('Copied address to clipboard')
-    } else {
-      console.log('Invalid address')
-    }
-  })
-  .catch((err) => {
+  if (name) {
+    clipboardy.writeSync(name)
+    console.log('Copied name to clipboard')
+  } else {
+    console.log('Copied abbreviated address to clipboard')
+  }
+} else {
+  const address = await client.getEnsAddress({ name: input })
+
+  if (address) {
+    clipboardy.writeSync(address)
+    console.log('Copied address to clipboard')
+  } else {
     console.log('Invalid address')
-  })
+  }
+}

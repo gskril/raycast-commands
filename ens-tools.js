@@ -5,9 +5,6 @@
 // @raycast.title ENS Developer Tools
 // @raycast.mode fullOutput
 
-import { isHex, labelhash, namehash } from 'viem'
-import packet from 'dns-packet'
-
 // Optional parameters:
 // @raycast.icon 🤖
 // @raycast.argument1 { "type": "text", "placeholder": "name.eth" }
@@ -17,6 +14,9 @@ import packet from 'dns-packet'
 // @raycast.author Greg Skriloff
 // @raycast.authorURL https://gregskril.com
 
+import { bytesToString, hexToBytes, isHex, toHex } from 'viem'
+import { packetToBytes, namehash, labelhash } from 'viem/ens'
+
 const input = process.argv.slice(2)[0]
 
 const label = input.split('.')[0]
@@ -25,12 +25,12 @@ const labelHash = labelhash(label)
 
 if (isHex(input)) {
   console.log({
-    dnsDecoded: packet.name.decode(Buffer.from(input.slice(2), 'hex')),
+    dnsDecoded: bytesToPacket(hexToBytes(input)),
   })
 } else {
   const data = {
     label,
-    dnsEncoded: '0x' + packet.name.encode(input).toString('hex'),
+    dnsEncoded: toHex(packetToBytes(input)),
     nameHash,
     nameHashUint: BigInt(nameHash).toString(),
     labelHash: labelHash,
@@ -38,4 +38,22 @@ if (isHex(input)) {
   }
 
   console.log(data)
+}
+
+function bytesToPacket(bytes) {
+  let offset = 0
+  let result = ''
+
+  while (offset < bytes.length) {
+    const len = bytes[offset]
+    if (len === 0) {
+      offset += 1
+      break
+    }
+
+    result += `${bytesToString(bytes.subarray(offset + 1, offset + len + 1))}.`
+    offset += len + 1
+  }
+
+  return result.replace(/\.$/, '')
 }
