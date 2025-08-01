@@ -31,6 +31,7 @@ const input = process.argv.slice(2)[0]
 
 const privateKeyBytes = hexToBytes(ACCOUNT_PRIVATE_KEY)
 const ed25519Signer = new NobleEd25519Signer(privateKeyBytes)
+
 const dataOptions = {
   fid: FID,
   network: FarcasterNetwork.MAINNET,
@@ -38,11 +39,20 @@ const dataOptions = {
 
 const client = getInsecureHubRpcClient(process.env.FARCASTER_HUB_URL)
 
+const url = input.match(/https?:\/\/[^\s]+/)?.[0]
+const text = input.replace(url, '').trim()
+
+let embeds = []
+
+if (url) {
+  embeds = [{ url }]
+}
+
 const cast = await makeCastAdd(
   {
     type: CastType.CAST,
-    text: input,
-    embeds: [],
+    text,
+    embeds,
     embedsDeprecated: [],
     mentions: [],
     mentionsPositions: [],
