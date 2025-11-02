@@ -22,7 +22,7 @@ const input = process.argv.slice(2)[0]
 
 const client = createPublicClient({
   chain: mainnet,
-  transport: http(),
+  transport: http('https://ethereum-rpc.publicnode.com'),
 })
 
 if (isAddress(input)) {
